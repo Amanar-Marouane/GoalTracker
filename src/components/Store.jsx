@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { Context } from '../pages/Dashboard';
+import { Context } from '../pages/Index';
 
 const Store = () => {
     const [errors, setErrors] = useState({ title: '', target: '' });
@@ -34,6 +34,7 @@ const Store = () => {
         };
         setGoals(prevGoals => [...prevGoals, goal]);
         document.getElementById('store').style.display = 'none';
+        e.target.reset();
     };
 
     return (
