@@ -23,6 +23,10 @@ const Dashboard = () => {
         storeForm.style.display = 'flex';
     }
 
+    const Delete = (id) => {
+        setGoals(prevGoals => prevGoals.filter(goal => goal.id !== id));
+    }
+
     return (
         <AppLayout>
             <Context.Provider value={[goals, setGoals]}>
@@ -58,7 +62,9 @@ const Dashboard = () => {
                                             ></div>
                                         </div>
                                     </div>
-                                    <RedirectButton label="Close The Goal" href={`/goal/${goal.id}`} />
+                                    <button onClick={() => Delete(goal.id)} className='px-6 py-2 bg-black text-white rounded-lg hover:bg-opacity-90 transition-colors cursor-pointer add-new'>
+                                        Delete
+                                    </button>
                                 </div>
                             ))}
                         </div>
