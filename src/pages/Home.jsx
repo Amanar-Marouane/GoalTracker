@@ -39,10 +39,13 @@ const Home = () => {
                         Stay consistent and motivated over time
                     </li>
                 </ul>
-                <p className='text-xl font-semibold'>Get Started Now!</p>
+            </section>
+
+            <section className='bg-white min-h-fit space-y-8 py-14 flex flex-col justify-center items-center'>
+                <p className='text-xl font-semibold text-black'>Get Started Now!</p>
                 <div className='flex gap-4'>
-                    <RedirectButton label={'Start a goal'} />
-                    <RedirectButton label={'Track your goals'} />
+                    <RedirectButton label={'Start a goal'} href='/new' />
+                    <RedirectButton label={'Track your goals'} href='/dashboard' />
                 </div>
             </section>
         </AppLayout >

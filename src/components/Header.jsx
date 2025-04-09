@@ -1,5 +1,4 @@
 import { HomeIcon, UserIcon } from '@heroicons/react/24/solid';
-import NavLink from './NavLink';
 
 const Header = () => {
     return (
@@ -18,9 +17,9 @@ const Header = () => {
                             </a>
                         </li>
                         <li>
-                            <a href="/profile" className="flex items-center gap-2 font-semibold text-lg text-black hover:opacity-80">
+                            <a href="/dashboard" className="flex items-center gap-2 font-semibold text-lg text-black hover:opacity-80">
                                 <UserIcon className="h-5 w-5" />
-                                Profile
+                                Dashboard
                             </a>
                         </li>
                     </ul>
