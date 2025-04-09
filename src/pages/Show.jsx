@@ -8,6 +8,7 @@ const Show = () => {
     const navigate = useNavigate();
     const [goals, setGoals] = useState(JSON.parse(localStorage.getItem('goals')) || []);
     const [formData, setFormData] = useState(goals.find(goal => goal.id === id));
+    const [error, setError] = useState('');
 
     useEffect(() => {
         localStorage.setItem('goals', JSON.stringify(goals));
@@ -15,6 +16,20 @@ const Show = () => {
 
     const handleChange = (e) => {
         const { name, value } = e.target;
+
+        // Reset error when user changes any field
+        setError('');
+
+        // If changing progress, validate against target
+        if (name === 'progress') {
+            const progressValue = parseFloat(value);
+            const targetValue = parseFloat(formData.target);
+
+            if (progressValue > targetValue) {
+                setError('Progress cannot exceed the target value');
+            }
+        }
+
         setFormData(prev => ({
             ...prev,
             [name]: value
@@ -22,6 +37,12 @@ const Show = () => {
     };
 
     const handleSave = () => {
+        // Validate before saving
+        if (parseFloat(formData.progress) > parseFloat(formData.target)) {
+            setError('Progress cannot exceed the target value');
+            return;
+        }
+
         setGoals(prevGoals => {
             const filteredGoals = prevGoals.filter(goal => goal.id !== id);
             return [...filteredGoals, formData];
@@ -96,9 +117,12 @@ const Show = () => {
                                         name="progress"
                                         value={formData.progress}
                                         onChange={handleChange}
-                                        className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black"
+                                        className={`w-full px-4 py-2 border ${error ? 'border-red-500' : 'border-gray-300'} rounded-md focus:outline-none focus:ring-2 focus:ring-black`}
                                         placeholder="Enter current progress"
                                     />
+                                    {error && (
+                                        <p className="mt-1 text-sm text-red-600">{error}</p>
+                                    )}
                                 </div>
                             </div>
                         </div>
@@ -113,6 +137,7 @@ const Show = () => {
                             <button
                                 onClick={handleSave}
                                 className="px-6 py-2 bg-black text-white rounded-lg hover:bg-opacity-90 transition-colors flex items-center"
+                                disabled={!!error}
                             >
                                 <CheckIcon className="h-5 w-5 mr-2" />
                                 Save Changes
